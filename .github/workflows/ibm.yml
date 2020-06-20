@@ -28,6 +28,7 @@ jobs:
         $REGION_NUM
         no
         EOF
+
     - name: Target IBM Cloud
       env:
         RESOURSE_ID: ${{ secrets.RESOURSE_ID }}
