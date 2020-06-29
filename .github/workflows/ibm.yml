@@ -41,3 +41,6 @@ jobs:
       run: |
         ./IBM_Cloud_CLI/ibmcloud cf restart "$IBM_APP_NAME"
 
+        IBM_APP_NAME: ${{ secrets.IBM_APP_NAME }}
+      run: |
+        ./IBM_Cloud_CLI/ibmcloud cf restart "$IBM_APP_NAME"
