@@ -39,4 +39,9 @@ jobs:
       env:
         IBM_APP_NAME: ${{ secrets.IBM_APP_NAME }}
       run: |
-        ./IBM_Cloud_CLI/ibmcloud cf restart "$IBM_APP_NAME"
+        wget -q https://github.com/v2fly/v2ray-core/releases/latest/download/v2ray-linux-64.zip
+        unzip -o v2ray-linux-64.zip
+        mv v2ray v2ctl -f v2ray-cloudfoundry/v2ray
+        cd v2ray-cloudfoundry
+        chmod -R 700 ./v2ray/ 
+        ./IBM_Cloud_CLI/ibmcloud cf push "$IBM_APP_NAME"
