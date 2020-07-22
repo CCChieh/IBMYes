@@ -144,11 +144,12 @@ https://github.com/CCChieh/IBMYes
 
 New secret
 
-分别建立四个secret
+分别建立五个secret
 
 ```
 IBM_ACCOUNT // IBM Cloud的登录邮箱和密码
 IBM_APP_NAME // 应用的名称
+IBM_SPACE_NAME //应用所属空间的名称
 REGION_NUM // 区域编码
 RESOURSE_ID // 资源组ID
 ```

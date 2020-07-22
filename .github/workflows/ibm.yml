@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ master ]
   schedule:
-    - cron: '0 12 * * FRI'
+    - cron: '0 0 * * *'
 
 jobs:
   ibm-cloud-restart:
@@ -31,9 +31,10 @@ jobs:
     - name: Target IBM Cloud
       env:
         RESOURSE_ID: ${{ secrets.RESOURSE_ID }}
+        IBM_SPACE_NAME: ${{ secrets.IBM_SPACE_NAME }}
       run: |
         ./IBM_Cloud_CLI/ibmcloud target -g "$RESOURSE_ID"
-        ./IBM_Cloud_CLI/ibmcloud target --cf
+        ./IBM_Cloud_CLI/ibmcloud target -s "$IBM_SPACE_NAME" --cf
         ./IBM_Cloud_CLI/ibmcloud cf install
     - name: Restart IBM Cloud
       env:
