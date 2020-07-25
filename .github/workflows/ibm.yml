@@ -36,8 +36,8 @@ jobs:
         ./IBM_Cloud_CLI/ibmcloud target -g "$RESOURSE_ID"
         ./IBM_Cloud_CLI/ibmcloud target -s "$IBM_SPACE_NAME" --cf
         ./IBM_Cloud_CLI/ibmcloud cf install
-    - name: Redeploy IBM Cloud
+    - name: Restage IBM Cloud
       env:
         IBM_APP_NAME: ${{ secrets.IBM_APP_NAME }}
       run: |
-        ./IBM_Cloud_CLI/ibmcloud cf redeploy "$IBM_APP_NAME"
+        ./IBM_Cloud_CLI/ibmcloud cf restage "$IBM_APP_NAME"
