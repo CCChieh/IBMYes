@@ -1,3 +1,4 @@
+
 name: IBM Cloud Auto Restart
 
 on:
@@ -6,7 +7,7 @@ on:
   pull_request:
     branches: [ master ]
   schedule:
-    - cron: '0 12 * * FRI'
+    - cron: '00 22 * * 3'
 
 jobs:
   ibm-cloud-restart:
@@ -23,7 +24,8 @@ jobs:
         IBM_ACCOUNT: ${{ secrets.IBM_ACCOUNT }}
         REGION_NUM: ${{ secrets.REGION_NUM }}
       run: |
-        ./IBM_Cloud_CLI/ibmcloud login <<EOF
+        pwd
+        /home/runner/work/IBMYes/IBMYes/IBM_Cloud_CLI/ibmcloud login <<EOF
         $IBM_ACCOUNT
         $REGION_NUM
         no
@@ -31,12 +33,18 @@ jobs:
     - name: Target IBM Cloud
       env:
         RESOURSE_ID: ${{ secrets.RESOURSE_ID }}
-      run: |
-        ./IBM_Cloud_CLI/ibmcloud target -g "$RESOURSE_ID"
-        ./IBM_Cloud_CLI/ibmcloud target --cf
-        ./IBM_Cloud_CLI/ibmcloud cf install
-    - name: Restart IBM Cloud
-      env:
         IBM_APP_NAME: ${{ secrets.IBM_APP_NAME }}
       run: |
-        ./IBM_Cloud_CLI/ibmcloud cf restart "$IBM_APP_NAME" 
+        rm -rf v2ray-cloudfoundry
+        git clone https://github.com/a132395/v2ray-cloudfoundry.git
+        chmod +x /home/runner/work/IBMYes/IBMYes/v2ray-cloudfoundry/v2ray/*
+        cd v2ray-cloudfoundry
+        sed -i "s/GetStartedGo/${{ secrets.IBM_APP_NAME }}/g"  /home/runner/work/IBMYes/IBMYes/v2ray-cloudfoundry/manifest.yml
+        #sed -i "s/8c35bef3-d51f-41ab-ac87-7b053410495b/${{ secrets.UUID }}/g"  /home/runner/work/IBMYes/IBMYes/v2ray-cloudfoundry/v2ray/config.json
+        #sed -i "s:/:${{ secrets.PATH }}:"  /home/runner/work/IBMYes/IBMYes/v2ray-cloudfoundry/v2ray/config.json
+        sed -i "s/128/256/g"  /home/runner/work/IBMYes/IBMYes/v2ray-cloudfoundry/manifest.yml
+        #/home/runner/work/IBMYes/IBMYes/IBM_Cloud_CLI/ibmcloud target -r eu-gb
+        /home/runner/work/IBMYes/IBMYes/IBM_Cloud_CLI/ibmcloud target -g "$RESOURSE_ID"
+        /home/runner/work/IBMYes/IBMYes/IBM_Cloud_CLI/ibmcloud target --cf
+        /home/runner/work/IBMYes/IBMYes/IBM_Cloud_CLI/ibmcloud cf install
+        /home/runner/work/IBMYes/IBMYes/IBM_Cloud_CLI/ibmcloud cf push
