@@ -6,6 +6,11 @@ create_mainfest_file(){
     echo "进行配置。。。"
     read -p "请输入你的应用名称：" IBM_APP_NAME
     echo "应用名称：${IBM_APP_NAME}"
+    read -p "请输入你的主机名：(默认与应用名称相同)" IBM_HOST_NAME
+    if [ -z "${IBM_HOST_NAME}" ];then
+    IBM_HOST_NAME=${IBM_APP_NAME}
+    fi
+    echo "主机名：${IBM_HOST_NAME}"
     read -p "请输入你的应用内存大小(默认256)：" IBM_MEM_SIZE
     if [ -z "${IBM_MEM_SIZE}" ];then
     IBM_MEM_SIZE=256
@@ -104,8 +109,8 @@ install(){
     VMESSCODE=$(base64 -w 0 << EOF
     {
       "v": "2",
-      "ps": "ibmyes",
-      "add": "ibmyes.us-south.cf.appdomain.cloud",
+      "ps": "${IBM_APP_NAME}",
+      "add": "${IBM_HOST_NAME}.us-south.cf.appdomain.cloud",
       "port": "443",
       "id": "${UUID}",
       "aid": "4",
