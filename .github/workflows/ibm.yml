@@ -26,7 +26,7 @@ jobs:
         ./IBM_Cloud_CLI/ibmcloud login <<EOF
         $IBM_ACCOUNT
         $REGION_NUM
-        no
+        no  
         EOF
     - name: Target IBM Cloud
       env:
