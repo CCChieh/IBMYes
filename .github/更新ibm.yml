@@ -1,0 +1,42 @@
+名称：IBM Cloud自动重启
+
+在：
+  推送：
+    分支机构：[主管]
+  pull_request：
+    分支机构：[主管]
+  时间表：
+    - cron的：' 0 12 * * FRI '
+
+职位：
+  ibm-cloud-restart：
+    运行：ubuntu-latest
+
+    步骤：
+    - 用途：actions / checkout @ v2
+
+    - 名称：初始化
+      运行：|
+        chmod -R 777 ./IBM_Cloud_CLI/
+    - 名称：登录IBM Cloud
+      env：
+        IBM_ACCOUNT：$ {{ secrets.IBM_ACCOUNT }}
+        REGION_NUM：$ {{secrets.REGION_NUM}}
+      运行：|
+        ./IBM_Cloud_CLI/ibmcloud登录<< EOF
+        $ IBM_ACCOUNT
+        $ REGION_NUM
+        没有
+        紧急行动
+    - 名称：目标IBM Cloud
+      env：
+        RESOURSE_ID：$ {{secrets.RESOURSE_ID}}
+      运行：|
+        ./IBM_Cloud_CLI/ibmcloud目标-g“ $ RESOURSE_ID”
+        ./IBM_Cloud_CLI/ibmcloud目标--cf
+        ./IBM_Cloud_CLI/ibmcloud cf -v 6.51.0
+    - 名称：重新启动IBM Cloud
+      env：
+        IBM_APP_NAME：$ {{ secrets.IBM_APP_NAME }}
+      运行：|
+        ./IBM_Cloud_CLI/ibmcloud cf重新启动“ $ IBM_APP_NAME”
