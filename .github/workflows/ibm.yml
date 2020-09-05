@@ -1,44 +1,27 @@
 name: IBM Cloud Auto Restart
 
-
-
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: master
+  watch:
+    types: started
   schedule:
-    - cron: '0 12 * * FRI'
+    - cron: 15 20 * * 4
 
 jobs:
-  ibm-cloud-restart:
+  IBM-Cloud-CF-APP-Restart:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Init
+    - name: Install CF CLI
       run: |
-        chmod -R 777 ./IBM_Cloud_CLI/
-    - name: Login IBM Cloud
-      env:
-        IBM_ACCOUNT: ${{ secrets.IBM_ACCOUNT }}
-        REGION_NUM: ${{ secrets.REGION_NUM }}
-      run: |
-        ./IBM_Cloud_CLI/ibmcloud login <<EOF
-        $IBM_ACCOUNT
-        $REGION_NUM
-        no
-        EOF
-    - name: Target IBM Cloud
-      env:
-        RESOURSE_ID: ${{ secrets.RESOURSE_ID }}
-      run: |
-        ./IBM_Cloud_CLI/ibmcloud target -g "$RESOURSE_ID"
-        ./IBM_Cloud_CLI/ibmcloud target --cf
-        ./IBM_Cloud_CLI/ibmcloud cf install
-    - name: Restart IBM Cloud
-      env:
-        IBM_APP_NAME: ${{ secrets.IBM_APP_NAME }}
-      run: |
-        ./IBM_Cloud_CLI/ibmcloud cf restart "$IBM_APP_NAME"
+        curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github&version=v6" | tar -zx
+        sudo mv cf /usr/local/bin
+      
+    - name: Login CF
+      run: cf l -a https://api.${{ secrets.RGN }}.cf.cloud.ibm.com login -u ${{ secrets.MAIL }} -p ${{ secrets.PWD }}
+      
+    - name: Restart CF APP
+      run: cf rs ${{ secrets.CFNAME }}
