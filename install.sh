@@ -41,7 +41,7 @@ EOF
                 "streamSettings": {
                     "network":"ws",
                     "wsSettings": {
-                        "path": ""
+                        "path": "${WSPATH}"
                     }
                 }
             }
