@@ -3,8 +3,6 @@ name: IBM Cloud Auto Restart
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
   schedule:
     - cron: '0 12 * * FRI'
 
@@ -18,6 +16,7 @@ jobs:
     - name: Init
       run: |
         chmod -R 777 ./IBM_Cloud_CLI/
+        ./IBM_Cloud_CLI/ibmcloud config --check-version=false
     - name: Login IBM Cloud
       env:
         IBM_ACCOUNT: ${{ secrets.IBM_ACCOUNT }}
@@ -34,7 +33,7 @@ jobs:
       run: |
         ./IBM_Cloud_CLI/ibmcloud target -g "$RESOURSE_ID"
         ./IBM_Cloud_CLI/ibmcloud target --cf
-        ./IBM_Cloud_CLI/ibmcloud cf install
+        ./IBM_Cloud_CLI/ibmcloud cf install -f -v 6.15.0
     - name: Restart IBM Cloud
       env:
         IBM_APP_NAME: ${{ secrets.IBM_APP_NAME }}
