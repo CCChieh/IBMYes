@@ -10,30 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Init
-      run: |
-        chmod -R 777 ./IBM_Cloud_CLI/
-    - name: Login IBM Cloud
-      env:
-        IBM_ACCOUNT: ${{ secrets.IBM_ACCOUNT }}
-        REGION_NUM: ${{ secrets.REGION_NUM }}
-      run: |
-        ./IBM_Cloud_CLI/ibmcloud login <<EOF
-        $IBM_ACCOUNT
-        $REGION_NUM
-        no
-        EOF
-    - name: Target IBM Cloud
-      env:
-        RESOURSE_ID: ${{ secrets.RESOURSE_ID }}
-      run: |
-        ./IBM_Cloud_CLI/ibmcloud target -g "$RESOURSE_ID"
-        ./IBM_Cloud_CLI/ibmcloud target --cf
-        ./IBM_Cloud_CLI/ibmcloud cf install
-    - name: Restart IBM Cloud
+    - uses: citizen-of-planet-earth/cf-cli-action@v1
       env:
         IBM_APP_NAME: ${{ secrets.IBM_APP_NAME }}
-      run: |
-        ./IBM_Cloud_CLI/ibmcloud cf restart "$IBM_APP_NAME"
+      with:
+        cf_api: https://api.us-south.cf.cloud.ibm.com
+        cf_username: ${{ secrets.CF_USER_IBM }}
+        cf_password: ${{ secrets.CF_PASSWORD_IBM }}
+        cf_org: ${{ secrets.CF_ORG_IBM }}
+        cf_space: ${{ secrets.CF_SPACE_IBM }}
+        command: >
+          restart "$IBM_APP_NAME"
