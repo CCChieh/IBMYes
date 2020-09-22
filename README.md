@@ -2,17 +2,19 @@
 
 **测速节点已经停用，无法测试**
 
-**自动重启可能失效，IBM的API节点似乎失效**
+**自动安装失效**
 
 **本项目初衷是想学习CI/CD以及容器的使用，任何与此无关的问题将不做回复。**
 
+**从fork数量来看，使用人数过多，估计影响到IBM CF的正常使用，所以项目不在更新。**
+
 本项目包括3部分
 
-1. IBM Cloud Fonudray搭建应用
-2. 利用Github的Actions 每周重启 IBM Cloud Fonudray
+1. ~~IBM Cloud Fonudray搭建应用~~
+2. ~~利用Github的Actions 每周重启 IBM Cloud Fonudray~~
 3. ~~Cloudflare 高速节点中转~~
 
-# 使用IBM Cloud Fonudray搭建V2Ray
+# 使用IBM Cloud Fonudray搭建应用
 
 首先注册https://cloud.ibm.com/
 
