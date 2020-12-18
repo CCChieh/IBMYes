@@ -240,7 +240,7 @@ fetch(request)
 
 ![image-20200615214722195](img/README/image-20200615214722195.png)
 
-这里会给一个网址，\*.\*.workers.dev,这就是你的cloudflare中转后的域名。
+这里会给一个网址，你的workers名.你的用户名.workers.dev,这就是你的cloudflare中转后的域名。
 
 然后我们去v2的客户端中修改地址
 
@@ -262,7 +262,11 @@ fetch(request)
 
 ![image-20200615215820188](img/README/image-20200615215820188.png)
 
-如果不方便用电脑优选ip也可以把地址设为`cloudflare.com`或`icook.tw`,这两个一个cloudflare官网，自然也是使用自家cdn，另外一家是台湾省的一个网站，域名指向的ip一般也是比较好的线路。
+如果不方便用电脑优选ip也可以把地址设为`cloudflare.com`或`icook.tw`,这两个一个cloudflare官网，自然也是使用自家cdn，另外一家是台湾省的一个网站，域名指向的ip一般也是比较好的线路，不过据部分群友测试，在部分网络条件下表现不佳。
+
+或者可以使用一些其他的节点优选加速服务，例如`cf.186526.xyz`或`cdn.shendubaigei.xyz`或`cdn.linil.ml`。
+
+当然，有钱上其他的CDN也是拦不住你的。
 
 ![image-20200615220201165](img/README/image-20200615220201165.png)
 
