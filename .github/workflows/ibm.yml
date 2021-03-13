@@ -5,10 +5,12 @@ on:
     branches: [ master ]
   schedule:
     - cron: '0 12 * * FRI'
-
+      
+      
 jobs:
   ibm-cloud-restart:
     runs-on: ubuntu-latest
+
 
     steps:
     - uses: actions/checkout@v2
@@ -27,6 +29,8 @@ jobs:
         $REGION_NUM
         no
         EOF
+        
+
     - name: Target IBM Cloud
       env:
         RESOURSE_ID: ${{ secrets.RESOURSE_ID }}
