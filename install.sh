@@ -95,6 +95,9 @@ clone_repo(){
 install(){
     echo "进行安装。。。"
     cd ${SH_PATH}/IBMYes/v2ray-cloudfoundry
+    UUID=$(cat /proc/sys/kernel/random/uuid)
+    echo "uuid: " $UUID
+    sed -i "s/id\": .*\"/id\": \"$UUID\"/g" ./v2ray/config.json
     ibmcloud target --cf
     echo "N"|ibmcloud cf install
     ibmcloud cf push
